@@ -27,19 +27,19 @@ class KucoinAPIClient {
         const timestamp = new Date().toLocaleTimeString();
         switch(type) {
             case 'success':
-                console.log(`[${timestamp}] [*] ${msg}`.green);
+                console.log(`[${timestamp}] [*] ${msg}`.green); // Success message
                 break;
             case 'custom':
-                console.log(`[${timestamp}] [*] ${msg}`.magenta);
+                console.log(`[${timestamp}] [*] ${msg}`.magenta); // Custom message
                 break;        
             case 'error':
-                console.log(`[${timestamp}] [!] ${msg}`.red);
+                console.log(`[${timestamp}] [!] ${msg}`.red); // Error message
                 break;
             case 'warning':
-                console.log(`[${timestamp}] [*] ${msg}`.yellow);
+                console.log(`[${timestamp}] [*] ${msg}`.yellow); // Warning message
                 break;
             default:
-                console.log(`[${timestamp}] [*] ${msg}`.blue);
+                console.log(`[${timestamp}] [*] ${msg}`.blue); // Default info message
         }
     }
 
@@ -47,7 +47,7 @@ class KucoinAPIClient {
         for (let i = seconds; i > 0; i--) {
             const timestamp = new Date().toLocaleTimeString();
             readline.cursorTo(process.stdout, 0);
-            process.stdout.write(`[${timestamp}] [*] Chờ ${i} giây để tiếp tục...`);
+            process.stdout.write(`[${timestamp}] [*] Waiting ${i} seconds to continue...`);
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
         readline.cursorTo(process.stdout, 0);
@@ -110,7 +110,7 @@ class KucoinAPIClient {
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i];
                 
-                console.log(`========== Tài khoản ${i + 1} ==========`);
+                console.log(`========== Account ${i + 1} ==========`);
                 
                 const points = this.generateRandomPoints(3000, 55);
                 let totalPoints = 0;
@@ -120,21 +120,21 @@ class KucoinAPIClient {
                     const increment = points[j];
                     currentMolecule -= increment; 
 
-                    this.log(`Lần ${j + 1}: Bón ${increment} sâu cho ếch...`, 'info');
+                    this.log(`Round ${j + 1}: Feeding the frog with ${increment} worms...`, 'info');
                     
                     const result = await this.increaseGold(cookie, increment, currentMolecule);
                     if (result.success) {
-                        this.log(`Cho ăn thành công, đã bón được ${result.data.data} sâu`, 'success');
+                        this.log(`Feeding successful, ${result.data.data} worms fed`, 'success');
                         totalPoints += increment;
-                        this.log(`Số sâu còn lại: ${currentMolecule}`, 'custom');
+                        this.log(`Remaining worms: ${currentMolecule}`, 'custom');
                     } else {
-                        this.log(`Không thể bón sâu: ${result.error}`, 'error');
+                        this.log(`Unable to feed worms: ${result.error}`, 'error');
                     }
 
                     await this.countdown(3);
                 }
 
-                this.log(`Tổng số gold đã tăng: ${totalPoints}`, 'custom');
+                this.log(`Total gold increased: ${totalPoints}`, 'custom');
                 await new Promise(resolve => setTimeout(resolve, 5000));
             }
 
